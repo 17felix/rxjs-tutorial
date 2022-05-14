@@ -1,5 +1,5 @@
 import { interval } from "rxjs"
-import { filter, map, take } from "rxjs/operators"
+import { filter, map, take, scan } from "rxjs/operators"
 
 const btn = document.getElementById('interval')
 const rxjsBtn = document.getElementById('rxjs')
@@ -38,10 +38,12 @@ btn.addEventListener('click', () => {
 rxjsBtn.addEventListener('click', () => {
   interval(1000)
     .pipe(
+      take(people.length),
       filter(v => people[v].age >= 18), 
-      map(v => people[v].name)
+      map(v => people[v].name),
+      scan((acc, v) => acc.concat(v), [])
     )
     .subscribe(res => {
-      display.textContent = res
+      display.textContent = res.join(' ')
     })
 })
