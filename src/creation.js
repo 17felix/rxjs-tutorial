@@ -37,8 +37,6 @@ streamObservable$.subscribe({
     }
 })
 
-
-// FromEvent
 fromEvent(document.querySelector('canvas'), 'mousemove')
 .pipe(
     map(e => ({
@@ -56,3 +54,12 @@ clear$.subscribe(() => {
     const canvas = document.querySelector('canvas')
     canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
 })
+
+const sub = interval(500).subscribe(v => console.log(v))
+setTimeout(() => {
+    sub.unsubscribe()
+}, 4000)
+
+timer(2500).subscribe(v => console.log(v))
+
+range(42, 10).subscribe(v => console.log(v))
